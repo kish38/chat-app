@@ -18,8 +18,13 @@ io.on('connection', (socket)=>{
     socket.emit("message", "Welcome!")
     socket.broadcast.emit("message", "New User has Joined")
 
-    socket.on('sendMessage', (message) => {
+    socket.on('sendMessage', (message, callback) => {
         io.emit("message", message)
+        callback()
+    })
+
+    socket.on('sendLocation', (location) => {
+        io.emit("message", `https://google.com/maps?q=${location.latitude},${location.longitude}`)
     })
 
     socket.on('disconnect', () => {
